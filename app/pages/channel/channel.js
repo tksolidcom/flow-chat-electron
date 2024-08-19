@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 let channelName;
 let fontSize = "xx-large";
-let color = "white";
+let defaultColor = "white";
+
 window.addEventListener("DOMContentLoaded", () => {
   console.log("dom content loaded");
 
@@ -22,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     channel.bind("chat", function (data) {
       console.log("flow chat received");
       console.log(data);
-      addChat(data);
+      addChat(data.chat, data.color);
     });
 
     changeFontSize(channelOptions.fontSize);
@@ -36,7 +37,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const addChat = (chat) => {
+const addChat = (chat, color) => {
   console.log(`addChat: ${chat}`);
   const chatContainer = document.getElementById("chat-container");
   const chatMessage = document.createElement("div");
@@ -63,7 +64,7 @@ const addChat = (chat) => {
   chatMessage.style.animationDuration = animationDuration + "s";
 
   chatMessage.style.fontSize = fontSize;
-  chatMessage.style.color = color;
+  chatMessage.style.color = color || defaultColor;
 
   chatContainer.appendChild(chatMessage);
 
@@ -83,8 +84,8 @@ const changeFontSize = (_fontSize) => {
 
 const changeColor = (_color) => {
   if (_color) {
-    color = _color;
+    defaultColor = _color;
   } else {
-    color = "white";
+    defaultColor = "white";
   }
 };

@@ -12,12 +12,30 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const channelLinks = document.getElementById("openedChannels");
     const channelLink = document.createElement("li");
-    channelLink.textContent = `https://flow-chat-beta.vercel.app/flow-chat/${channelOptions.channelName}`;
+    channelLink.style.display = "flex";
+
+    const linkText = `https://flow-chat-beta.vercel.app/flow-chat/${channelOptions.channelName}`;
+    const linkSpan = document.createElement("span");
+    linkSpan.textContent = linkText;
+
+    const copyButton = document.createElement("button");
+    copyButton.innerHTML = '<i class="fas fa-copy copy-icon"></i>';
+    copyButton.className = "btn btn-primary copy-button";
+    copyButton.addEventListener("click", () => {
+      copyToClipboard(linkText);
+    });
+
+    channelLink.appendChild(linkSpan);
+    channelLink.appendChild(copyButton);
     channelLinks.appendChild(channelLink);
 
     channelNameEl.value = "";
   });
 });
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text);
+}
 
 // eslint-disable-next-line no-unused-vars
 const changeFontSize = () => {
